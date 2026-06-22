@@ -1,0 +1,24 @@
+{
+  "name": "nop_commerce_automation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:all": "playwright test homepage.spec.ts",
+    "test:unit": "playwright test unitTest.spec.ts",
+    "result": "playwright show-report"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^26.0.0",
+    "tsx": "^4.22.4"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^10.5.0",
+    "faker": "^5.5.3"
+  }
+}

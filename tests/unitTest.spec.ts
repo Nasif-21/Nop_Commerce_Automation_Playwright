@@ -11,7 +11,7 @@ test("Do valid registration ",async({page})=>
   await page.goto('https://test470.nop-station.com/register');
   await page.waitForTimeout(2000);
   const register=new RegisterPage(page);
-
+  
   const userModel:UserModel={
     firstName:faker.person.firstName(),
     lastName:faker.person.lastName(),

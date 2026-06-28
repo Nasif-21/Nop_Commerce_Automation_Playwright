@@ -1,5 +1,5 @@
 import { expect, Locator, Page } from "@playwright/test";
-import { UserModel } from "../model/usermodel.ts";
+import { UserModel } from "../model/usermodel";
 
 
 export class RegisterPage
@@ -27,7 +27,7 @@ export class RegisterPage
         await this.page.getByRole("textbox", { name: "Password:", exact: true }).fill(userMode.password);
         await this.page.getByRole("textbox", { name: "Confirm password:", exact: true }).fill(userMode.password);
         await this.page.getByRole('checkbox', { name: 'I accept privacy policy' }).click();
-        //await this.page.getByRole('button', {name: "REGISTER"}).click();
+        await this.page.getByRole('button', {name: "REGISTER"}).click();
        
 
     }

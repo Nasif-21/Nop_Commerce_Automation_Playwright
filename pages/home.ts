@@ -14,5 +14,4 @@ export class HomePage
         await this.page.getByRole("link",{name:"Log in"}).click()
     }
 
-
 }

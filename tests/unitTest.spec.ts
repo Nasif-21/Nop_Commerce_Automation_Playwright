@@ -2,7 +2,7 @@ import { test, expect, Page } from '@playwright/test';
 import { RegisterPage } from '../pages/register';
 import { UserModel } from '../model/usermodel';
 import { faker } from '@faker-js/faker';
-import { generateRandomNumber } from '../utils/utils';
+import { generateRandomNumber, saveJsonData } from '../utils/utils';
 
 let page: Page;
 
@@ -20,7 +20,8 @@ test("Do valid registration ",async({page})=>
     
   }
   await register.validuserRegister(userModel);
-  
+  await page.waitForTimeout(2000);
+  saveJsonData(userModel,'resources/userList.json');
   await page.pause()
 
 

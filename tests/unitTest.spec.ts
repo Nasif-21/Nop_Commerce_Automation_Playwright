@@ -1,11 +1,33 @@
 import { test, expect, Page } from '@playwright/test';
 import { RegisterPage } from '../pages/register';
+import { HomePage } from '../pages/home';
 import { UserModel } from '../model/usermodel';
 import { faker } from '@faker-js/faker';
-import { generateRandomNumber, saveJsonData } from '../utils/utils';
+import { generateRandomNumber, readJsonData, saveJsonData } from '../utils/utils';
+import { LoginPage } from '../pages/login';
 
 let page: Page;
 
+test("Do login using valid user",async({page})=>
+{
+  await page.goto('https://test470.nop-station.com');
+  const filePath='resources/userList.json';
+
+  const homePage=new HomePage(page);
+  const loginPage=new LoginPage(page);
+
+  await homePage.clickLoginLink();
+  await page.waitForTimeout(2000);
+  
+  const userData=readJsonData(filePath);
+  await loginPage.doValidLogin(userData.email, userData.password)
+
+
+});
+
+
+
+/*
 test("Do valid registration ",async({page})=>
 {
   await page.goto('https://test470.nop-station.com/register');
@@ -26,6 +48,8 @@ test("Do valid registration ",async({page})=>
 
 
 });
+*/
+
 
 
 /*

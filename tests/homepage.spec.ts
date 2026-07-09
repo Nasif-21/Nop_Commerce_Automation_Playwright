@@ -1,5 +1,5 @@
 import { test, expect, Page } from '@playwright/test';
-import { generateRandomNumber} from '../utils/utils';
+import { generateRandomNumber,saveJsonData} from '../utils/utils';
 import { HomePage } from '../pages/home';
 import { RegisterPage } from '../pages/register';
 import { UserModel } from '../model/usermodel';
@@ -92,11 +92,56 @@ test('Step 05: Valid registration with all mandatory fields', async ({ }) => {
     
   }
   await register.validuserRegister(userModel);
+  await page.waitForTimeout(2000);
+  saveJsonData(userModel,'resources/userList.json');
   await page.pause()
 });
 
-test.fixme('Step 06:Go to log in page', async ({ }) => {});
+test.fixme('Step 06:Go to log in page', async ({ }) => {
+  test.info().annotations.push({
+    type: 'note',
+    description: 'Going to login page after doing registration',
+  });
+  const homePage=new HomePage(page);
+  await homePage.clickLoginLink();
 
+});
+
+test.fixme('Step:07:Doing login with invalid credencials',async({})=>{
+  test.info().annotations.push({
+    type: 'Assertion',
+    description: 'Invalid login attempt using unregister email and password',
+  });
+
+
+});
+
+
+test.fixme('Step:08:Doing login with one empty field',async({})=>{
+    test.info().annotations.push({
+    type: 'Assertion',
+    description: 'Login attempt by keeping password field empty',
+  });
+
+});
+
+
+test.fixme('Step:09:Doing login using empty field',async({})=>{
+  test.info().annotations.push({
+    type: 'Assertion',
+    description: 'Login attempt by keeping all field empty',
+  });
+
+});
+
+
+test.fixme('Step:10:Doing login using valid credencials',async({})=>{
+  test.info().annotations.push({
+    type: 'Assertion',
+    description: 'Doing login using valid credencials in required field',
+  });
+});
+  
 });
 
 

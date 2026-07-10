@@ -1,9 +1,11 @@
 import { test, expect, Page } from '@playwright/test';
-import { generateRandomNumber,saveJsonData} from '../utils/utils';
+import { generateRandomNumber,saveJsonData,readJsonData} from '../utils/utils';
 import { HomePage } from '../pages/home';
 import { RegisterPage } from '../pages/register';
+
 import { UserModel } from '../model/usermodel';
 import { faker } from '@faker-js/faker';
+import { LoginPage } from '../pages/login';
 
 //let page:Page;
 
@@ -18,7 +20,7 @@ test.describe.serial("User registration flow",()=>
         await page.close();
     });
 
-    
+   
   test('Step 01: Go to Home page', async ({}) => {
     test.info().annotations.push({
     type: 'note',
@@ -97,49 +99,92 @@ test('Step 05: Valid registration with all mandatory fields', async ({ }) => {
   await page.pause()
 });
 
-test.fixme('Step 06:Go to log in page', async ({ }) => {
+
+//Part of Login starts here, if you want to stop test, add test.fixme
+
+test('Step 06:Go to log in page', async ({ }) => {
   test.info().annotations.push({
     type: 'note',
     description: 'Going to login page after doing registration',
   });
+
+  await page.goto("https://test470.nop-station.com")
   const homePage=new HomePage(page);
   await homePage.clickLoginLink();
+  await page.waitForLoadState();
 
 });
 
-test.fixme('Step:07:Doing login with invalid credencials',async({})=>{
+test('Step:07:Doing login with invalid credencials',async({})=>{
   test.info().annotations.push({
     type: 'Assertion',
     description: 'Invalid login attempt using unregister email and password',
   });
+  
+const loginPage=new LoginPage(page);
+  const invalidMail=faker.internet.email();
+  const invalidPassword=generateRandomNumber(10000,99999).toString();
 
+  await loginPage.doAllInvalidLogin(invalidMail,invalidPassword)
+
+  
+  const errorMessage= page.locator(".validation-summary-errors")
+
+  await expect(errorMessage).toBeVisible();
+
+  await expect(errorMessage).toContainText('Login was unsuccessful. Please correct the errors and try again');
+  await expect(errorMessage).toContainText("No customer account found");
 
 });
 
 
-test.fixme('Step:08:Doing login with one empty field',async({})=>{
+test('Step:08:Doing login with one empty field',async({})=>{
     test.info().annotations.push({
     type: 'Assertion',
     description: 'Login attempt by keeping password field empty',
   });
+  const loginPage=new LoginPage(page);
+  const userEmail=readJsonData('resources/userList.json');
+  await loginPage.doOneFieldvalidLogin(userEmail.email);
+
+  await page.waitForLoadState();
+
+  
+  const errorMessage= page.locator(".validation-summary-errors")
+
+  await expect(errorMessage).toBeVisible();
+
+  await expect(errorMessage).toContainText('Login was unsuccessful. Please correct the errors and try again');
+  await expect(errorMessage).toContainText("The credentials provided are incorrect");
 
 });
 
 
-test.fixme('Step:09:Doing login using empty field',async({})=>{
+test('Step:09:Doing login using empty field',async({})=>{
   test.info().annotations.push({
     type: 'Assertion',
     description: 'Login attempt by keeping all field empty',
   });
+  const loginPage=new LoginPage(page);
+  loginPage.doEmptyLogin();
+  await page.waitForLoadState();
 
 });
 
 
-test.fixme('Step:10:Doing login using valid credencials',async({})=>{
+test('Step:10:Doing login using valid credencials',async({})=>{
   test.info().annotations.push({
     type: 'Assertion',
     description: 'Doing login using valid credencials in required field',
   });
+    const filePath='resources/userList.json';
+    const loginPage=new LoginPage(page);
+  
+    
+    const userData=readJsonData(filePath);
+    await loginPage.doValidLogin(userData.email, userData.password)
+    await page.pause();
+  
 });
   
 });

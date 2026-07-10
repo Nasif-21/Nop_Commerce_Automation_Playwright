@@ -5,8 +5,66 @@ import { UserModel } from '../model/usermodel';
 import { faker } from '@faker-js/faker';
 import { generateRandomNumber, readJsonData, saveJsonData } from '../utils/utils';
 import { LoginPage } from '../pages/login';
+import { log } from 'node:console';
 
 let page: Page;
+
+//Need to test this part
+
+/*
+
+test("Doing login using invalid user and password",async({page})=>{
+  await page.goto('https://test470.nop-station.com');
+  const homePage=new HomePage(page);
+  await homePage.clickLoginLink();
+
+
+  const loginPage=new LoginPage(page);
+  const invalidMail=faker.internet.email();
+  const invalidPassword=generateRandomNumber(10000,99999).toString();
+
+  await loginPage.doAllInvalidLogin(invalidMail,invalidPassword)
+
+  
+  const errorMessage= page.locator(".validation-summary-errors")
+
+  await expect(errorMessage).toBeVisible();
+
+  await expect(errorMessage).toContainText('Login was unsuccessful. Please correct the errors and try again');
+  await expect(errorMessage).toContainText("No customer account found");
+
+
+
+
+});
+
+*/
+
+/*test("Doing login using invalid user",async({page})=>{
+  await page.goto('https://test470.nop-station.com');
+  const homePage=new HomePage(page);
+  await homePage.clickLoginLink();
+
+
+  const loginPage=new LoginPage(page);
+  const userEmail=readJsonData('resources/userList.json');
+  await loginPage.doOneFieldvalidLogin(userEmail.email);
+
+  await page.waitForTimeout(3000);
+
+  
+  const errorMessage= page.locator(".validation-summary-errors")
+
+  await expect(errorMessage).toBeVisible();
+
+  await expect(errorMessage).toContainText('Login was unsuccessful. Please correct the errors and try again');
+  await expect(errorMessage).toContainText("The credentials provided are incorrect");
+
+
+
+
+});
+*/
 
 test("Do login using valid user",async({page})=>
 {
@@ -21,6 +79,7 @@ test("Do login using valid user",async({page})=>
   
   const userData=readJsonData(filePath);
   await loginPage.doValidLogin(userData.email, userData.password)
+  await page.pause();
 
 
 });

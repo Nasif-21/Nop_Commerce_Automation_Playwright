@@ -1,5 +1,7 @@
 import fs from 'fs';
 import { UserModel } from '../model/usermodel';
+import path from 'path';
+import { Page } from '@playwright/test';
 
 
 export function generateRandomNumber(min:number,max:number):number
@@ -26,5 +28,22 @@ export function readJsonData(filepath:string):UserModel
     const fileContent=fs.readFileSync(filepath,'utf-8')
     const jsonArray=JSON.parse(fileContent)
     return jsonArray[jsonArray.length-1];
+
+}
+
+const tokenFilePath=path.resolve(__dirname,'../resources/localstorage.json');
+
+export async function setAuth(page:Page)
+{
+    const cookie=JSON.parse(fs.readFileSync(tokenFilePath,'utf-8'))
+    await page.context().addCookies([cookie]);
+
+}
+
+export async function getAuth(page:Page, cookieName:string)
+{
+    const cookies=await page.context().cookies();
+    const cookie=cookies.find(c=>c.name===cookieName);
+    fs.writeFileSync(tokenFilePath,JSON.stringify(cookie));
 
 }

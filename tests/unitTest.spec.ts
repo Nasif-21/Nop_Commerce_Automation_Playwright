@@ -3,11 +3,23 @@ import { RegisterPage } from '../pages/register';
 import { HomePage } from '../pages/home';
 import { UserModel } from '../model/usermodel';
 import { faker } from '@faker-js/faker';
-import { generateRandomNumber, readJsonData, saveJsonData } from '../utils/utils';
+import { generateRandomNumber, readJsonData, saveJsonData,setAuth,getAuth } from '../utils/utils';
 import { LoginPage } from '../pages/login';
 import { log } from 'node:console';
 
 let page: Page;
+ test.beforeAll(async({browser})=>{
+        page=await browser.newPage();
+        await setAuth(page)
+    });
+
+    test('Checking login cred',async({})=>
+    {
+
+     await page.goto('https://test470.nop-station.com/customer/info');
+     await page.pause();
+
+    });
 
 //Need to test this part
 
@@ -65,8 +77,9 @@ test("Doing login using invalid user and password",async({page})=>{
 
 });
 */
+// Task: Add a localstorage to save token data ,check github and google
 
-test("Do login using valid user",async({page})=>
+/* test("Do login using valid user",async({page})=>
 {
   await page.goto('https://test470.nop-station.com');
   const filePath='resources/userList.json';
@@ -79,11 +92,15 @@ test("Do login using valid user",async({page})=>
   
   const userData=readJsonData(filePath);
   await loginPage.doValidLogin(userData.email, userData.password)
+  await page.waitForURL("https://test470.nop-station.com")
+  await getAuth(page,".Nop.Authentication")
   await page.pause();
 
 
-});
 
+
+});
+*/
 
 
 /*

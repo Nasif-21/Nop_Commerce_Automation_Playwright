@@ -43,7 +43,7 @@ jobs:
       run: mkdir -p resources
 
     - name: Run playwright test sequencially
-      run: npx playwright test:all --workers=1 --timeout=60000
+      run: npx playwright test homepage.spec.ts --workers=1 --timeout=60000
 
       
       

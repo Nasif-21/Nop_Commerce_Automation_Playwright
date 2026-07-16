@@ -155,7 +155,7 @@ test('Step:08:Doing login with one empty field',async({})=>{
   await expect(errorMessage).toBeVisible();
 
   await expect(errorMessage).toContainText('Login was unsuccessful. Please correct the errors and try again');
-  await expect(errorMessage).toContainText("The credentials provided are incorrect");
+  await expect(errorMessage).toContainText("No customer account found");
 
 });
 

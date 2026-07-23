@@ -186,6 +186,32 @@ test('Step:10:Doing login using valid credencials',async({})=>{
     await page.pause();
   
 });
+
+test.fixme("Step:11:Go to buy a product",async({})=>
+{
+
+});
+
+test.fixme("Step:12:Go to cart to checkout",async({})=>
+{
+
+});
+
+test.fixme("Step:13: Check if I am choosing right product",async({})=>
+{
+
+});
+
+test.fixme("Step:14: Check the price of product",async({})=>
+{
+
+});
+
+test.fixme("Step:15: Provide shipping address",async({})=>
+{
+
+});
+
   
 });
 

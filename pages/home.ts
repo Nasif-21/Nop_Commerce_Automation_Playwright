@@ -13,5 +13,15 @@ export class HomePage
     {
         await this.page.getByRole("link",{name:"Log in"}).click()
     }
+    
+    async clickElectronics()
+    {
+        await this.page.getByRole("link",{name:"Electronics"}).first().hover()
+        await this.page.waitForLoadState()
+        await this.page.getByRole("link",{name:"Cell phones"}).click()
+
+
+    }
+
 
 }

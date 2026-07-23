@@ -6,6 +6,7 @@ import { faker } from '@faker-js/faker';
 import { generateRandomNumber, readJsonData, saveJsonData,setAuth,getAuth } from '../utils/utils';
 import { LoginPage } from '../pages/login';
 import { log } from 'node:console';
+import { CellPhone } from '../pages/cellPhone';
 
 let page: Page;
  test.beforeAll(async({browser})=>{
@@ -13,11 +14,17 @@ let page: Page;
         await setAuth(page)
     });
 
-    test('Checking login cred',async({})=>
+    test('Go to add some product',async({})=>
     {
 
-     await page.goto('https://test470.nop-station.com/customer/info');
-     await page.pause();
+     await page.goto('https://test470.nop-station.com/');
+     const homePage=new HomePage(page)
+     const cellPhone=new CellPhone(page)
+     await homePage.clickElectronics();
+     await page.waitForLoadState();
+     await cellPhone.clickProduct();
+     await page.pause()
+
 
     });
 
